@@ -1,0 +1,35 @@
+const int irSensorPin = 15;   // IR Sensor Output
+const int buzzerPin = 13;     // Buzzer Output
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(irSensorPin, INPUT);
+  pinMode(buzzerPin, OUTPUT);
+
+  // Test beep at startup
+  digitalWrite(buzzerPin, HIGH);
+  delay(200);
+  digitalWrite(buzzerPin, LOW);
+
+  Serial.println("WaveGuard System Online...");
+}
+
+void loop() {
+  // Read sensor value
+  int sensorState = digitalRead(irSensorPin);
+
+  // If IR detected
+  if (sensorState == LOW) {
+    Serial.println("!! IR SOURCE DETECTED !!");
+
+    // Rapid beep alert
+    digitalWrite(buzzerPin, HIGH);
+    delay(50);
+    digitalWrite(buzzerPin, LOW);
+    delay(50);
+  } 
+  else {
+    // No detection
+    digitalWrite(buzzerPin, LOW);
+  }
+}
